@@ -5,6 +5,12 @@ let parkingPlacesActually;
 let priceDay;
 let priceHour;
 
+// const adminData = {
+//   parkingPlacesActually,
+//   priceDay,
+//   priceHour
+// }
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -24,17 +30,16 @@ rl.question("Enter the number of parking places available: ", (answer1) => {
 const interactWitAdmin =()=>{
 
   rl.question(
-    "'Choose an action (1 for init parking lot ,2 for put random cars, 3 view all data, 4 totalAveragePrices ): " ,
+    "'Choose an action (1 for init parking lot ,2 how may places available now, 3 view all data, 4 totalAveragePrices , 5for put random cars ): " ,
     (answer) => {
       if (answer === "1") {
         interactWithUser();
        }
        else if(answer === "2"){
-         putRandomCars( priceDay,
-           priceHour,parkingPlacesActually)
-           console.log("succses we put randoms cars")
-           interactWitAdmin ()
-         }
+          console.log(`rite now in te parking ${parkingPlacesActually} places available`)
+          interactWitAdmin ()
+        }
+   
          else if(answer === "3"){
         console.log(data) 
         interactWitAdmin()
@@ -44,6 +49,11 @@ const interactWitAdmin =()=>{
        
         interactWitAdmin()
         }
+        else if(answer === "5"){
+          putRandomCars( parkingPlacesActually)
+            console.log("success we put randoms cars")
+            interactWitAdmin ()
+          }
           else {
           console.log("Invalid choice");}
        }
@@ -51,11 +61,12 @@ const interactWitAdmin =()=>{
      }
 function interactWithUser() {
   rl.question(
-    "Choose an action (1 for parkingIn, 2 for parkingOut, 3 to exit): ",
+    "Choose an action (1 for parkingIn, 2 for parkingOut, ,3 admin 4 to exit): ",
     (answer) => {
       if (answer === "1") {
         rl.question("Enter the entry ID for parkingIn: ", (entryId) => {
-          parkingIn(parseInt(entryId), parkingPlacesActually);
+          
+          parkingIn(parseInt(entryId), parkingPlacesActually );
           interactWithUser();
         });
       } else if (answer === "2") {
@@ -67,8 +78,11 @@ function interactWithUser() {
             priceHour
           ); // Call parkingOut with the provided entryId
           interactWithUser(); // Continue interacting
-        });
-      } else if (answer === "3") {
+        });}
+        else if (answer === "3") {
+          interactWitAdmin()
+        }
+     else if (answer === "4") {
         rl.close(); // Exit
       } else {
         console.log("Invalid choice. Please choose 1, 2, or 3.");
