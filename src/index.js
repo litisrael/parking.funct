@@ -1,15 +1,10 @@
 import readline from "readline";
 import { parkingIn, parkingOut, putRandomCars ,data ,totalAveragePrices} from "../src/app/index.js";
 
-let parkingPlacesActually;
+let parkingPlacesActually 
 let priceDay;
 let priceHour;
 
-// const adminData = {
-//   parkingPlacesActually,
-//   priceDay,
-//   priceHour
-// }
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -36,7 +31,7 @@ const interactWitAdmin =()=>{
         interactWithUser();
        }
        else if(answer === "2"){
-          console.log(`rite now in te parking ${parkingPlacesActually} places available`)
+          console.log(`rite now in te parking places ocupated ${Object.keys(data.currentCars).length} and  ${parkingPlacesActually- Object.keys(data.currentCars).length} places available`)
           interactWitAdmin ()
         }
    

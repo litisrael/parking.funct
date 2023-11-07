@@ -1,5 +1,4 @@
 export const data = {
-  // parkingLog: [],
   paymentHistory: [],
   currentCars: {},
 };
@@ -14,38 +13,37 @@ export const parkingIn = (
     return;
   }
 
-  if (parkingPlacesActually > 0) {
-    // const entry = {
-    //   id: entryId,
-    //   timeIn: currentTime,
-    //   day: currentTime.toLocaleDateString(),
-    // };
+  if (Object.keys(data.currentCars).length >= parkingPlacesActually) {
 
-    // data.parkingLog.push(entry);
-    parkingPlacesActually--;
-    data.currentCars[entryId] = {
-      timeIn: currentTime,
-      day: currentTime.toLocaleDateString(),
-    };
-    console.log("Updated parkingLog:", data.currentCars);
-    console.log(`places available ${parkingPlacesActually}`);
-  } else {
     console.log("not places available");
+    return
   }
+
+  data.currentCars[entryId] = {
+    timeIn: currentTime,
+    day: currentTime.toLocaleDateString(),
+  };
+  console.log("Updated parkingLog:", data.currentCars);
+  console.log(
+    `places available  ${
+      parkingPlacesActually - Object.keys(data.currentCars).length
+    }`
+  );
 };
 
-// priceDay, priceHour;
 export const parkingOut = (
   entryId,
   parkingPlacesActually,
   priceDay,
   priceHour
 ) => {
-  if(!data.currentCars[entryId]){console.log(`the ${entryId} not find`); return  }
+  if (!data.currentCars[entryId]) {
+    console.log(`the ${entryId} not find`);
+    return;
+  }
   const exitTime = new Date();
-  // const entry = data.parkingLog.find((log) => log.id === entryId);
   const entry = data.currentCars[entryId].timeIn;
-  console.log("entry hora de entrada", entry);
+
   const dayOfWeek = exitTime.toLocaleDateString("en-US", { weekday: "long" });
 
   if (entry) {
@@ -61,7 +59,7 @@ export const parkingOut = (
       totalPrice: priceToPay,
     };
     data.paymentHistory.push(payment);
-    parkingPlacesActually++;
+
     console.log(
       `Vehículo  ID ${entryId}  in date ${entry} out date ${exitTime.toLocaleTimeString()}. total hours ${Math.ceil(
         duration
@@ -88,11 +86,8 @@ const calculatPrice = (hours, priceDay, priceHour) => {
   }
 };
 
-// console.log(calculatPrice(8));
 export const putRandomCars = (parkingPlacesActually) => {
-  // console.log(new Date(randomDate));
-
-  for (let i = 100; i < 200; i++) {
+  for (let i = 100; i < 120; i++) {
     const randomDay = Math.floor(Math.random() * 27) + 1; // Números aleatorios de 1 a 31 (días válidos)
     const randomMonth = Math.floor(Math.random() * 10); // Números aleatorios de 0 a 12
     const randomHour = Math.floor(Math.random() * 24); // Números aleatorios de 0 a 23
